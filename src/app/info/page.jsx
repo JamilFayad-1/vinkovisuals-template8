@@ -94,14 +94,14 @@ const InfoPage = () => {
               ref={descriptionRef}
             >
               <p>
-                Format Archive is a thoughtfully curated marketplace for digital
+                Vinko Visuals is a thoughtfully curated marketplace for digital
                 design assets, tailored for creatives who value minimalism,
                 clarity, and intentionality. Our collection includes everything
                 from refined mockups and sleek UI templates to motion elements,
                 sound effects, and graphic components—each crafted to elevate
                 the way visual stories are told. Whether you're a designer
                 shaping a brand, a developer building an interface, or an artist
-                exploring new mediums, Format Archive offers tools that are as
+                exploring new mediums, Vinko Visuals offers tools that are as
                 functional as they are beautiful, designed to seamlessly
                 integrate into modern workflows and creative processes.
               </p>
@@ -112,7 +112,7 @@ const InfoPage = () => {
                 studios across the globe who share our commitment to quality and
                 simplicity. Every asset we feature is carefully selected to
                 ensure it meets our standards for visual precision and
-                usability. At Format Archive, we aim to be more than just a
+                usability. At Vinko Visuals, we aim to be more than just a
                 resource—we’re building a creative ecosystem where thoughtful
                 design lives, evolves, and empowers creators to do their best
                 work with confidence and clarity.
@@ -153,14 +153,14 @@ const InfoPage = () => {
                 <p>Creator Collaborations</p>
               </div>
               <div className="revealer">
-                <p>studio@formatarchive.com</p>
+                <p>studio@vinkovisuals.com</p>
               </div>
               <br />
               <div className="revealer">
                 <p>Customer Support</p>
               </div>
               <div className="revealer">
-                <p>support@formatarchive.com</p>
+                <p>support@vinkovisuals.com</p>
               </div>
             </div>
           </div>

@@ -233,10 +233,10 @@ export default function Home() {
       <div className="home-page-content">
         <div className="header">
           <h1 className="header-line-1">
-            <span>Format</span>
+            <span>Vinko</span>
           </h1>
           <h1 className="header-line-2">
-            <span>Archive</span>
+            <span>Visuals</span>
           </h1>
         </div>
 

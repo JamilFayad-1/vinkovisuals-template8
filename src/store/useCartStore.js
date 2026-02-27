@@ -52,7 +52,7 @@ const useCartStore = create(
       },
     }),
     {
-      name: "format-archive-cart",
+      name: "vinko-visuals-cart",
       getStorage: () =>
         typeof window !== "undefined" ? window.localStorage : null,
       skipHydration: true,
