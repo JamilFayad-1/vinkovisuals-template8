@@ -34,12 +34,12 @@ const Footer = () => {
       </div>
       <div className="footer-col">
         <div className="footer-clock">
-          <p>Toronto, ON {torontoTime}</p>
+          <p>Montréal, QC {torontoTime}</p>
         </div>
         <div className="footer-author">
           <p>
             Made by&nbsp;
-            <Link href="https://www.instagram.com/vinkovisuals/">Vinko Visuals</Link>
+            <Link href="https://vinkovisuals.ca/" target="_blank">Vinko Visuals</Link>
           </p>
         </div>
       </div>

@@ -457,13 +457,7 @@ const Menu = () => {
           <div className="menu-footer-col">
             <div className="socials">
               <div className="revealer">
-                <a href="https://www.instagram.com/vinkovisuals/">YouTube</a>
-              </div>
-              <div className="revealer">
-                <a href="https://www.instagram.com/vinkovisuals/">Instagram</a>
-              </div>
-              <div className="revealer">
-                <a href="https://www.instagram.com/vinkovisuals/">X</a>
+                <a href="https://www.instagram.com/vinkovisuals/" target="_blank" rel="noopener noreferrer">Instagram</a>
               </div>
             </div>
           </div>

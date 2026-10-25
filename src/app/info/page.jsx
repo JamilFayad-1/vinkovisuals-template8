@@ -153,14 +153,14 @@ const InfoPage = () => {
                 <p>Creator Collaborations</p>
               </div>
               <div className="revealer">
-                <p>studio@vinkovisuals.com</p>
+                <p>hello@vinkovisuals.ca</p>
               </div>
               <br />
               <div className="revealer">
                 <p>Customer Support</p>
               </div>
               <div className="revealer">
-                <p>support@vinkovisuals.com</p>
+                <p>hello@vinkovisuals.ca</p>
               </div>
             </div>
           </div>
