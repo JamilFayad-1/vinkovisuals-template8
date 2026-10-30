@@ -350,7 +350,7 @@ const Menu = () => {
                 }
               }}
             >
-              Vinko Visuals
+              Ostra
             </a>
           </div>
         </div>
@@ -381,7 +381,7 @@ const Menu = () => {
                   navigateTo("/");
                 }}
               >
-                Vinko Visuals
+                Ostra
               </a>
             </div>
           </div>
@@ -457,7 +457,7 @@ const Menu = () => {
           <div className="menu-footer-col">
             <div className="socials">
               <div className="revealer">
-                <a href="https://www.instagram.com/vinkovisuals/" target="_blank" rel="noopener noreferrer">Instagram</a>
+                <a href="/info">Contact</a>
               </div>
             </div>
           </div>

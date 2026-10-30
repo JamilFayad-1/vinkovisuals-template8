@@ -37,7 +37,7 @@
 }
 
 .header-line-1 {
-  margin-left: 9rem;
+  margin-left: 0;
 }
 
 .home-page-footer {
@@ -178,7 +178,7 @@ h1 span {
   }
 
   .header-line-1 {
-    margin-left: -2rem;
+    margin-left: 0;
   }
 
   .header-line-2 {

@@ -5,7 +5,7 @@ import ClientLayout from "@/client-layout";
 import { ViewTransitions } from "next-view-transitions";
 
 export const metadata = {
-  title: "Vinko Visuals",
+  title: "Ostra",
   description: "A curated marketplace for digital design assets.",
 };
 

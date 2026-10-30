@@ -52,7 +52,7 @@ const useCartStore = create(
       },
     }),
     {
-      name: "vinko-visuals-cart",
+      name: "ostra-cart",
       getStorage: () =>
         typeof window !== "undefined" ? window.localStorage : null,
       skipHydration: true,

@@ -1,7 +1,6 @@
 "use client";
 import "./Footer.css";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 
 const Footer = () => {
   const [torontoTime, setTorontoTime] = useState("");
@@ -30,7 +29,7 @@ const Footer = () => {
   return (
     <div className="footer">
       <div className="footer-col">
-        <p>&copy;2026 All right reserved</p>
+        <p>&copy;2026 All rights reserved</p>
       </div>
       <div className="footer-col">
         <div className="footer-clock">
@@ -38,8 +37,7 @@ const Footer = () => {
         </div>
         <div className="footer-author">
           <p>
-            Made by&nbsp;
-            <Link href="https://vinkovisuals.ca/" target="_blank">Vinko Visuals</Link>
+            Ostra — Independent design resources
           </p>
         </div>
       </div>
