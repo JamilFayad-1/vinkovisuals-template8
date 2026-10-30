@@ -1,5 +1,6 @@
 "use client";
 import "./index.css";
+import HeroMotion from "@/components/HeroMotion/HeroMotion";
 import { useRef, useState, useEffect } from "react";
 
 import useCartStore from "@/store/useCartStore";
@@ -231,6 +232,7 @@ export default function Home() {
       )}
 
       <div className="home-page-content">
+        <HeroMotion />
         <div className="header">
           <h1 className="header-line-1">
             <span>Ostra</span>

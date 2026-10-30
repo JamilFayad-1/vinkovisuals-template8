@@ -1,0 +1,88 @@
+.hero-motion-stage {
+  position: absolute;
+  inset: 72px 24px 160px;
+  display: grid;
+  place-items: center;
+  perspective: 1200px;
+  pointer-events: none;
+}
+
+.hero-motion-panel {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --light-x: 50%;
+  width: min(48vw, 660px, 78vh);
+  padding: 5px;
+  border-radius: 28px;
+  background: linear-gradient(145deg, #aaa, #353535 35%, #151515 70%, #777);
+  box-shadow: 0 2px 0 #171717, 0 5px 0 #393939, 0 7px 0 #191919,
+    0 24px 40px -18px #55555570, 0 55px 80px -42px #55555560;
+  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) rotateZ(-2deg);
+  will-change: transform;
+  pointer-events: auto;
+}
+
+.hero-motion-screen {
+  position: relative;
+  aspect-ratio: 936 / 520;
+  overflow: hidden;
+  border-radius: 23px;
+  background: #e5e5e5 url('/motion/ostra-panther.jpg') center / cover;
+  isolation: isolate;
+}
+
+.hero-motion-screen video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-motion-reflection {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(ellipse at var(--light-x) 0%, #ffffff35, transparent 65%);
+  box-shadow: inset 0 1px 1px #ffffffb0, inset 0 0 0 1px #ffffff30;
+}
+
+.hero-motion-toggle {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  border: 1px solid #ffffff70;
+  border-radius: 20px;
+  padding: 8px 12px;
+  background: #111;
+  color: #fff;
+  font: 600 10px "PP Neue Montreal", sans-serif;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+.hero-motion-panel:hover .hero-motion-toggle,
+.hero-motion-panel:focus-within .hero-motion-toggle { opacity: 1; }
+.hero-motion-toggle:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+@media (max-width: 900px) {
+  .hero-motion-stage { inset: 72px 20px 145px; }
+  .hero-motion-panel { width: min(78vw, 600px, 85vh); }
+  .hero-motion-toggle { opacity: 1; }
+  .home-page .header {
+    top: auto;
+    bottom: 125px;
+    transform: none;
+  }
+}
+
+@media (max-height: 600px) and (min-width: 901px) {
+  .hero-motion-stage { inset: 65px 24px 130px; }
+  .hero-motion-panel { width: min(42vw, 65vh); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-motion-panel { transform: none; will-change: auto; }
+  .hero-motion-toggle { opacity: 1; transition: none; }
+}
