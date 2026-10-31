@@ -16,13 +16,17 @@ const Menu = () => {
   const isCartOpen = useCartStore((state) => state.isCartOpen);
   const [isAnimating, setIsAnimating] = useState(false);
   const [currentPath, setCurrentPath] = useState("/");
-  const [cartCount, setCartCount] = useState(0);
+  const cartCount = useCartStore((state) =>
+    state.cartItems.reduce((count, item) => count + item.quantity, 0)
+  );
   const router = useTransitionRouter();
 
-  const getCartCount = useCartStore((state) => state.getCartCount);
   const toggleCart = useCartStore((state) => state.toggleCart);
 
   const menuRef = useRef(null);
+  const menuTimeline = useRef(null);
+
+  useEffect(() => () => menuTimeline.current?.kill(), []);
   const navRef = useRef(null);
   const menuOverlayRef = useRef(null);
 
@@ -35,28 +39,6 @@ const Menu = () => {
 
   const menuItemsRef = useRef(null);
   const menuFooterColsRef = useRef(null);
-
-  useEffect(() => {
-    setCartCount(getCartCount());
-
-    const handleStorageChange = () => {
-      setCartCount(getCartCount());
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    const interval = setInterval(() => {
-      const currentCount = getCartCount();
-      if (currentCount !== cartCount) {
-        setCartCount(currentCount);
-      }
-    }, 1000);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-      clearInterval(interval);
-    };
-  }, [getCartCount, cartCount]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -116,7 +98,7 @@ const Menu = () => {
         },
       ],
       {
-        duration: 1200,
+        duration: 600,
         easing: "cubic-bezier(0.87, 0, 0.13, 1)",
         fill: "forwards",
         pseudoElement: "::view-transition-old(root)",
@@ -133,7 +115,7 @@ const Menu = () => {
         },
       ],
       {
-        duration: 1200,
+        duration: 600,
         easing: "cubic-bezier(0.87, 0, 0.13, 1)",
         fill: "forwards",
         pseudoElement: "::view-transition-new(root)",
@@ -154,7 +136,6 @@ const Menu = () => {
   };
 
   const navigateTo = (path) => {
-    if (isAnimating) return;
 
     if (isExactPath(path)) {
       closeMenu();
@@ -163,161 +144,45 @@ const Menu = () => {
 
     closeMenu();
 
-    setTimeout(() => {
-      router.push(path, {
-        onTransitionReady: slideInOut,
-      });
-    }, 750);
+    router.push(path, {
+      onTransitionReady: slideInOut,
+    });
   };
 
   const openMenu = () => {
     if (isAnimating) return;
-
+    ["/", "/info", "/catalogue", "/archive", "/editorial"].forEach((path) => router.prefetch(path));
+    menuTimeline.current?.kill();
     setIsAnimating(true);
-    const tl = gsap.timeline({
-      onComplete: () => setIsAnimating(false),
+    const tl = gsap.timeline({ onComplete: () => setIsAnimating(false) });
+    menuTimeline.current = tl;
+    gsap.set(navRef.current, { pointerEvents: "none" });
+    gsap.set(menuOverlayRef.current, { pointerEvents: "all" });
+    tl.to(menuOverlayRef.current, {
+      clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+      duration: 0.4, ease: "power3.inOut",
     });
-
-    tl.to([navLogoRef.current, menuBtnRef.current, cartBtnRef.current], {
-      y: "-100%",
-      duration: 0.5,
-      stagger: 0.1,
-      ease: "power3.out",
-      onComplete: () => {
-        navRef.current.style.pointerEvents = "none";
-
-        gsap.set([navLogoRef.current, menuBtnRef.current, cartBtnRef.current], {
-          y: "100%",
-        });
-      },
-    });
-
-    tl.to(
-      menuOverlayRef.current,
-      {
-        clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-        duration: 1,
-        ease: "hop",
-        onStart: () => {
-          menuOverlayRef.current.style.pointerEvents = "all";
-        },
-      },
-      "-=0.55"
-    );
-
-    tl.to(
-      [overlayLogoRef.current, closeBtnRef.current],
-      {
-        y: "0%",
-        duration: 1,
-        stagger: 0.1,
-        ease: "power3.out",
-      },
-      "-=0.5"
-    );
-
-    tl.to(
-      ".menu-overlay-items .revealer a",
-      {
-        y: "0%",
-        duration: 1,
-        stagger: 0.075,
-        ease: "power3.out",
-      },
-      "<"
-    );
-
-    tl.to(
-      ".menu-footer .revealer p, .menu-footer .revealer a",
-      {
-        y: "0%",
-        duration: 1,
-        stagger: 0.1,
-        ease: "power3.out",
-      },
-      "<"
-    );
+    tl.to([overlayLogoRef.current, closeBtnRef.current,
+      ...menuRef.current.querySelectorAll(".menu-overlay-items .revealer a, .menu-footer .revealer p, .menu-footer .revealer a")], {
+      y: "0%", duration: 0.3, stagger: 0.025, ease: "power3.out",
+    }, 0.12);
   };
 
   const closeMenu = () => {
-    if (isAnimating) return;
-
+    menuTimeline.current?.kill();
     setIsAnimating(true);
-    const tl = gsap.timeline({
-      onComplete: () => setIsAnimating(false),
+    const tl = gsap.timeline({ onComplete: () => {
+      setIsAnimating(false);
+      gsap.set(menuOverlayRef.current, { pointerEvents: "none" });
+      gsap.set(navRef.current, { pointerEvents: "all" });
+      gsap.set([overlayLogoRef.current, closeBtnRef.current,
+        ...menuRef.current.querySelectorAll(".menu-overlay-items .revealer a, .menu-footer .revealer p, .menu-footer .revealer a")], { y: "100%" });
+    } });
+    menuTimeline.current = tl;
+    tl.to(menuOverlayRef.current, {
+      clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)",
+      duration: 0.35, ease: "power3.inOut",
     });
-
-    tl.to([overlayLogoRef.current, closeBtnRef.current], {
-      y: "-100%",
-      duration: 0.5,
-      stagger: 0.1,
-      ease: "power3.out",
-    });
-
-    tl.to(
-      ".menu-overlay-items .revealer a",
-      {
-        y: "-100%",
-        duration: 0.5,
-        stagger: 0.05,
-        ease: "power3.in",
-      },
-      "<"
-    );
-
-    tl.to(
-      ".menu-footer .revealer p, .menu-footer .revealer a",
-      {
-        y: "-100%",
-        duration: 0.5,
-        stagger: 0.05,
-        ease: "power3.in",
-      },
-      "<"
-    );
-
-    tl.to(
-      menuOverlayRef.current,
-      {
-        clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
-        duration: 1,
-        ease: "hop",
-        onComplete: () => {
-          menuOverlayRef.current.style.pointerEvents = "none";
-
-          gsap.set(menuOverlayRef.current, {
-            clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)",
-          });
-
-          gsap.set([overlayLogoRef.current, closeBtnRef.current], {
-            y: "100%",
-          });
-
-          gsap.set(".menu-overlay-items .revealer a", {
-            y: "100%",
-          });
-
-          gsap.set(".menu-footer .revealer p, .menu-footer .revealer a", {
-            y: "100%",
-          });
-        },
-      },
-      "+=0.25"
-    );
-
-    tl.to(
-      [navLogoRef.current, menuBtnRef.current, cartBtnRef.current],
-      {
-        y: "0%",
-        duration: 0.5,
-        stagger: 0.1,
-        ease: "power3.out",
-        onStart: () => {
-          navRef.current.style.pointerEvents = "all";
-        },
-      },
-      "-=0.35"
-    );
   };
 
   const handleCartClick = (e) => {
@@ -457,7 +322,7 @@ const Menu = () => {
           <div className="menu-footer-col">
             <div className="socials">
               <div className="revealer">
-                <a href="/info">Contact</a>
+                <a href="/info" onClick={(event) => { event.preventDefault(); navigateTo("/info"); }}>Contact</a>
               </div>
             </div>
           </div>

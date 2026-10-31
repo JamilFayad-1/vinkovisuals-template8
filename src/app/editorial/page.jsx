@@ -33,7 +33,7 @@ const Page = () => {
         },
       ],
       {
-        duration: 1200,
+        duration: 600,
         easing: "cubic-bezier(0.87, 0, 0.13, 1)",
         fill: "forwards",
         pseudoElement: "::view-transition-old(root)",
@@ -50,7 +50,7 @@ const Page = () => {
         },
       ],
       {
-        duration: 1200,
+        duration: 600,
         easing: "cubic-bezier(0.87, 0, 0.13, 1)",
         fill: "forwards",
         pseudoElement: "::view-transition-new(root)",
@@ -96,7 +96,7 @@ const Page = () => {
           duration: 1,
           ease: "power3.out",
           stagger: 0.1,
-          delay: 0.85,
+          delay: 0.1,
         }
       );
     },

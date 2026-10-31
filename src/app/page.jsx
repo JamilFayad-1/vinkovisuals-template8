@@ -43,7 +43,7 @@ export default function Home() {
         },
       ],
       {
-        duration: 1200,
+        duration: 600,
         easing: "cubic-bezier(0.87, 0, 0.13, 1)",
         fill: "forwards",
         pseudoElement: "::view-transition-old(root)",
@@ -60,7 +60,7 @@ export default function Home() {
         },
       ],
       {
-        duration: 1200,
+        duration: 600,
         easing: "cubic-bezier(0.87, 0, 0.13, 1)",
         fill: "forwards",
         pseudoElement: "::view-transition-new(root)",

@@ -1,82 +1,21 @@
 "use client";
 import "./info.css";
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 
 import Footer from "@/components/Footer/Footer";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import SplitType from "split-type";
-import { useLenis } from "lenis/react";
 
 const InfoPage = () => {
   const containerRef = useRef(null);
-  const descriptionRef = useRef(null);
-
-  const lenis = useLenis(({ scroll }) => {});
-
   useGSAP(() => {
-    if (!containerRef.current) return;
-
-    gsap.set(".info-wrapper .revealer p", {
-      y: "100%",
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    gsap.from(".info-wrapper .revealer p, #info-description p", {
+      y: 16, opacity: 0, duration: 0.45, stagger: 0.025,
+      ease: "power3.out", delay: 0.1,
     });
-
-    const tl = gsap.timeline({
-      defaults: {
-        ease: "power3.out",
-        delay: 0.85,
-      },
-    });
-
-    tl.to(".info-col:nth-child(1) .revealer p", {
-      y: "0%",
-      duration: 0.75,
-      stagger: 0.1,
-    });
-
-    tl.to(
-      ".info-col:nth-child(2) .revealer p",
-      {
-        y: "0%",
-        duration: 0.75,
-        stagger: 0.1,
-      },
-      "0"
-    );
-
-    if (descriptionRef.current) {
-      const descriptionParagraphs =
-        descriptionRef.current.querySelectorAll("p");
-
-      descriptionParagraphs.forEach((paragraph) => {
-        const splitDescription = new SplitType(paragraph, {
-          types: "lines",
-          lineClass: "line",
-        });
-
-        splitDescription.lines.forEach((line) => {
-          const content = line.innerHTML;
-          line.innerHTML = `<span>${content}</span>`;
-        });
-      });
-
-      gsap.set("#info-description p .line span", {
-        y: "100%",
-        display: "block",
-      });
-
-      tl.to(
-        "#info-description p .line span",
-        {
-          y: "0%",
-          duration: 0.75,
-          stagger: 0.05,
-        },
-        "-=2.5"
-      );
-    }
-  }, [containerRef, descriptionRef]);
+  }, { scope: containerRef });
 
   return (
     <div className="info-page" ref={containerRef}>
@@ -91,7 +30,6 @@ const InfoPage = () => {
             <div
               className="info-copy"
               id="info-description"
-              ref={descriptionRef}
             >
               <p>
                 Ostra is a thoughtfully curated marketplace for digital
